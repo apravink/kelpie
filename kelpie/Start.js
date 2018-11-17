@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import {getPetStatus} from './services/dataService'
 
 class StartScreen extends React.Component {
 
@@ -22,6 +23,7 @@ class StartScreen extends React.Component {
   }
 
   render() {
+    getPetStatus().then(console.log)
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>This is the loading screen! :)</Text>

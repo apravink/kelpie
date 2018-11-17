@@ -1,6 +1,8 @@
 import React from 'react';
 import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native';
 
+
+
 const petState = { 
   alive: [
     require('./assets/pet-1.png'),
@@ -35,6 +37,7 @@ export default class HomeScreen extends React.Component {
 }
 
 componentDidMount() {
+  
   this.next();
 }
 
