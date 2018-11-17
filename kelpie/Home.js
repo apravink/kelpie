@@ -40,11 +40,49 @@ export default class HomeScreen extends React.Component {
       index: 0, 
       points: 0, 
       appState: AppState.currentState,
-      background: 'beach'  
+      background: 'snow', 
+      petStyle: {
+          marginTop: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 300, height: 300,
+        }
     };
     this.petStatus = 'alive';
     this.state.fontLoaded = false;
-    Vibration.vibrate(3000);
+    Vibration.vibrate(1000);
+
+    setInterval(() => {
+
+      let rand = Math.round(Math.random());
+
+      if(rand == 0) {
+        this.setState(
+          { 
+            petStyle: { 
+            marginTop: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 300, 
+            height: 300 
+          }}
+          );
+      } else {
+        this.setState(
+          { 
+          petStyle: { 
+            marginTop: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: [{ scaleX: -1}],
+            width: 300, 
+            height: 300 
+          }}
+          );
+      }
+
+  }, 8000);
+
 }
 
 static navigationOptions = {
@@ -75,12 +113,18 @@ componentWillUnmount() {
   AppState.removeEventListener('change', this._handleAppStateChange);
 }
 
+_convertStatus(status) {
+  if(status == 'alive') {
+    return "I'm really happy ^^"
+  }
+}
+
 next() {
   setTimeout(() => {
-      this.setState({index: (this.state.index+1)%3, points: this.state.points + 1});
+      this.setState({index: (this.state.index+1)%(petState[`${this.petStatus}`].length), points: this.state.points + 1});
       //console.log(this.state.index, this.state.points);
       this.next();
-  }, 1000);
+  }, 200);
 
 }
 
@@ -92,7 +136,7 @@ next() {
         <View style = {styles.backgroundContainer}>
           <Image source = { petBackground[`${this.state.background}`] } resizeMode = 'cover' style = {styles.backdrop} />
         </View>
-        <View style = {styles.pet}>
+        <View style={styles.petContainer}>
         {
           this.state.fontLoaded ? (
             <Text style={{ fontFamily: '01 Digit', fontSize: 80 }}>
@@ -102,8 +146,11 @@ next() {
         }
           <Image
             source={petState[`${this.petStatus}`][this.state.index]}
-            style={styles.image}
+            style={this.state.petStyle}
           />
+
+          <Text style={{ overflow: 'hidden', borderWidth: 1, backgroundColor: '#F9DFA2', borderColor: '#000', borderRadius: 12, fontSize: 26, padding: 10, marginTop: 15 }}>{this._convertStatus(this.petStatus)}</Text>
+
         </View>
       </View>
     );
@@ -121,20 +168,23 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  pet: {
-    marginTop: 150,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
+  // pet: {
+  //   marginTop: 0,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   transform: [{ scaleX: -1}],
+  //   width: 300, height: 300,
+  // },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  image: {
-    width: 300, height: 300,
-    justifyContent: 'center'
+  petContainer: {
+    marginTop: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
