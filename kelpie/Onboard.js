@@ -74,7 +74,8 @@ class OnboardScreen extends React.Component {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%"
+          height: "100%",
+          marginTop: 90
         }}>
           <View
             style={{
@@ -85,7 +86,9 @@ class OnboardScreen extends React.Component {
               justifyContent: "flex-end"
             }}
           >
-          <Text style={{color: 'white', fontSize: 22, textAlign: 'center', paddingBottom: 15, width: 300}}>Welcome! Please enter the hatchery code you receive from the Unplug to Connect event.</Text>
+          <Text style={{color: 'white', fontSize: 22, textAlign: 'center', width: 300}}>
+          Welcome! Please enter the hatchery code you receive from the Unplug to Connect event.
+          </Text>
             <TextInput
               style={{
                 height:80,
@@ -98,7 +101,8 @@ class OnboardScreen extends React.Component {
                 borderRadius: 10,
                 backgroundColor: '#FFFFFF',
                 textAlign: 'center',
-                fontSize: 50
+                fontSize: 50,
+                marginTop: 20
               }}
               value={this.state.hatchCode}
               onChangeText={text => {

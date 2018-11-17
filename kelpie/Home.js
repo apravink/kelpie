@@ -157,7 +157,7 @@ export default class HomeScreen extends React.Component {
       });
       //console.log(this.state.index, this.state.points);
       this.next();
-    }, 200);
+    }, 150);
   }
 
   render() {
