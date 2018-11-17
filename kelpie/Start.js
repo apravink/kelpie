@@ -23,7 +23,7 @@ class StartScreen extends React.Component {
   }
 
   render() {
-    getPetStatus().then(console.log)
+    // getPetStatus().then(console.log)
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>This is the loading screen! :)</Text>
