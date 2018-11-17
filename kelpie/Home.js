@@ -28,7 +28,8 @@ const petState = {
   ]
 }
 const petBackground = {
-  snow: require('./assets/snow-background.png')
+  snow: require('./assets/snow-background.png'),
+  beach: require('./assets/beach-background.png'),
 }
 export default class HomeScreen extends React.Component {
 
@@ -39,7 +40,7 @@ export default class HomeScreen extends React.Component {
       index: 0, 
       points: 0, 
       appState: AppState.currentState,
-      background: 'snow'  
+      background: 'beach'  
     };
     this.petStatus = 'alive';
     this.state.fontLoaded = false;
