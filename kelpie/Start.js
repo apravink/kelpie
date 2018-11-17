@@ -23,7 +23,7 @@ class StartScreen extends React.Component {
         ],
       }))
 
-    }, 5000);
+    }, 2000);
   }
 
   render() {
