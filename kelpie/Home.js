@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native';
+import { Font, AppLoading } from "expo";
 
 const petState = { 
   alive: [
@@ -32,6 +33,16 @@ export default class HomeScreen extends React.Component {
     this.next = this.next.bind(this);
     this.state = {index: 0};
     this.petStatus = 'alive';
+    this.points = 0;
+    this.fontLoaded = false;
+}
+
+async componentWillMount() {
+  await Expo.Font.loadAsync({
+    '01 Digit': require('./assets/fonts/01_Digit.ttf'),
+  });
+  this.setState({ fontLoaded: true });
+
 }
 
 componentDidMount() {
@@ -46,22 +57,33 @@ next() {
       this.setState({index: (this.state.index+1)%3});
       this.next();
   }, 450);
+
 }
 
   render() {
     
     return (
       <View style={styles.container}>
-                    <Image
-              source={petState[`${this.petStatus}`][this.state.index]}
-              style={styles.image}
-            />
+      {
+          this.state.fontLoaded ? (
+            <Text style={{ fontFamily: '01 Digit', fontSize: 60 }}>
+              {this.points}
+            </Text>
+          ) : null
+        }
+      <Image
+        source={petState[`${this.petStatus}`][this.state.index]}
+        style={styles.image}
+      />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  points: {
+    fontFamily: '01 Digit'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
