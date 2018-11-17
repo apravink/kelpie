@@ -1,8 +1,6 @@
 import React from 'react';
-import { AppRegistry, Image, StyleSheet, Text, View, Vibration } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Text, View, Vibration, AppState } from 'react-native';
 import { Font, AppLoading } from "expo";
-
-
 
 const petState = { 
   alive: [
@@ -29,14 +27,21 @@ const petState = {
     require('./assets/petdead-10.png'),
   ]
 }
+const petBackground = {
+  snow: require('./assets/snow-background.png')
+}
 export default class HomeScreen extends React.Component {
+
   constructor(props) {
     super(props);
     this.next = this.next.bind(this);
-
-    this.state = {index: 0, points: 0};
+    this.state = {
+      index: 0, 
+      points: 0, 
+      appState: AppState.currentState,
+      background: 'snow'  
+    };
     this.petStatus = 'alive';
-    //this.points = 0;
     this.state.fontLoaded = false;
     Vibration.vibrate(3000);
 }
@@ -53,11 +58,20 @@ async componentWillMount() {
 }
 
 componentDidMount() {
-  
+  AppState.addEventListener('change', this._handleAppStateChange);
   this.next();
 }
 
-swapPet() {
+_handleAppStateChange = (nextAppState) => {
+  if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+  }
+
+  console.log(nextAppState);
+  this.setState({appState: nextAppState});
+}
+
+componentWillUnmount() {
+  AppState.removeEventListener('change', this._handleAppStateChange);
 }
 
 next() {
@@ -73,8 +87,9 @@ next() {
     
     return (
       <View style={styles.container}>
+      {/* <Text>{this.state.appState}</Text> */}
         <View style = {styles.backgroundContainer}>
-          <Image source = {require('./assets/SnowBackground.png')} resizeMode = 'cover' style = {styles.backdrop} />
+          <Image source = { petBackground[`${this.state.background}`] } resizeMode = 'cover' style = {styles.backdrop} />
         </View>
         <View style = {styles.pet}>
         {
