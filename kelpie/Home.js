@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   petContainer: {
-    marginTop: 150,
+    marginTop: 110,
     alignItems: 'center',
     justifyContent: 'center',
   }
