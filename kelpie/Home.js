@@ -109,6 +109,10 @@ _handleAppStateChange = (nextAppState) => {
   this.setState({appState: nextAppState});
 }
 
+_onLogout() {
+  console.log('Logout pressed');
+}
+
 componentWillUnmount() {
   AppState.removeEventListener('change', this._handleAppStateChange);
 }
@@ -137,9 +141,10 @@ next() {
           <Image source = { petBackground[`${this.state.background}`] } resizeMode = 'cover' style = {styles.backdrop} />
         </View>
         <View style={styles.petContainer}>
+        <Text onPress={this._onLogout} style={{textAlign: 'right', alignSelf: 'stretch', marginTop: -70, marginBottom: 65 }}>Logout</Text>
         {
           this.state.fontLoaded ? (
-            <Text style={{ fontFamily: '01 Digit', fontSize: 90, marginBottom: 15 }}>
+            <Text style={{ fontFamily: '01 Digit', fontSize: 90, marginTop: 20, marginBottom: 15 }}>
               {this.state.points}
             </Text>
           ) : null
@@ -149,7 +154,7 @@ next() {
             style={this.state.petStyle}
           />
 
-          <Text style={{ overflow: 'hidden', borderWidth: 1, backgroundColor: '#F9DFA2', borderColor: '#000', borderRadius: 12, fontSize: 26, padding: 10, marginTop: 15 }}>{this._convertStatus(this.petStatus)}</Text>
+          <Text style={{ overflow: 'hidden', borderWidth: 0, backgroundColor: '#F9DFA2', borderColor: '#000', borderRadius: 12, fontSize: 26, padding: 15, marginTop: 15 }}>{this._convertStatus(this.petStatus)}</Text>
 
         </View>
       </View>
