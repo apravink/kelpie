@@ -30,7 +30,13 @@ export async function validateUser( hatchCode ) {
 // startTime: Unit time stamp for stsart time
 // endtime: End time
 export async function setTimestamp(startTime, endTime) {
-    const body = {}
+    console.log('startTime', typeof startTime, 'endtime', endTime)
+    
+    // const response = await axios({
+    //   method: "post",
+    //   url: "https://limitless-meadow-89301.herokuapp.com/user",
+    //   data: 
+    // });
 }
 
 // 
