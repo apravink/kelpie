@@ -20,7 +20,6 @@ class OnboardScreen extends React.Component {
     validateUser(this.state.hatchCode)
     .then(data => {
       isValid = data
-      console.log(data)
       if (isValid) {
         this.props.navigation.dispatch(
           StackActions.reset({
@@ -41,15 +40,15 @@ class OnboardScreen extends React.Component {
     const borderColor = error ? 'red': 'grey'
     return (
       <View style={{ flex: 2, alignItems: "center", justifyContent: "center" }}>
-        <Image source={require('./assets/onboard-background.png')} resizeMode='cover' 
-        />
+        {/* <Image source={require('./assets/onboard-background.png')} resizeMode='cover' 
+        /> */}
         <Image
           source={require('./assets/egg.png')}
           style={{ top:-5 , width: 200, resizeMode: 'contain', marginLeft: 10, height:200 }}
         />
       
         <TextInput
-          style={{height:40, borderColor, borderWidth:1, width:140, marginBottom:8, paddingHorizontal: 2, fontSize: 16}}
+          style={{height:40, borderColor, borderWidth:2, width:140, marginBottom:8, paddingHorizontal: 2, fontSize: 16}}
           value={this.state.hatchCode}
           onChangeText={text => {
             this.setState({ hatchCode: text });

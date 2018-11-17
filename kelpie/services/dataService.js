@@ -17,7 +17,7 @@ export async function validateUser( hatchCode ) {
         
         const response =  await axios({
             method: "post",
-            url: "https://limitless-meadow-89301.herokuapp.com/log/club",
+            url: "https://limitless-meadow-89301.herokuapp.com/locations",
             data: {hatchCode},
             params : {
                 code : hatchCode
