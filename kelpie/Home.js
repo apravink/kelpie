@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppRegistry, Image, StyleSheet, Text, View, Vibration, AppState } from 'react-native';
-import { Font, AppLoading } from "expo";
+import { Image, StyleSheet, Text, View, Vibration, AppState } from 'react-native';
+import { StackActions, NavigationActions } from "react-navigation";
 
 const petState = { 
   alive: [
@@ -46,8 +46,11 @@ export default class HomeScreen extends React.Component {
           alignItems: 'center',
           justifyContent: 'center',
           width: 300, height: 300,
-        }
+        },
+      timeIn: '', 
+      timeOut: ''
     };
+
     this.petStatus = 'alive';
     this.state.fontLoaded = false;
     Vibration.vibrate(1000);
@@ -83,6 +86,8 @@ export default class HomeScreen extends React.Component {
 
   }, 5000);
 
+  this._onLogout = this._onLogout.bind(this)
+
 }
 
 static navigationOptions = {
@@ -90,6 +95,7 @@ static navigationOptions = {
 }
 
 async componentWillMount() {
+  this.setState({timeIn: Date.now(), timeOut: ''});
   await Expo.Font.loadAsync({
     '01 Digit': require('./assets/fonts/01_Digit.ttf'),
   });
@@ -110,8 +116,12 @@ _handleAppStateChange = (nextAppState) => {
 }
 
 _onLogout() {
-  console.log('Logout pressed');
-}
+  this.props.navigation.dispatch(
+    StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: "Onboard" })]
+    })
+  );}
 
 componentWillUnmount() {
   AppState.removeEventListener('change', this._handleAppStateChange);
@@ -133,6 +143,7 @@ next() {
 }
 
   render() {
+    // console.log(this.state.timeIn, this.state.timeOut);
     
     return (
       <View style={styles.container}>
