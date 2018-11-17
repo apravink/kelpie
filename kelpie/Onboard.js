@@ -1,5 +1,5 @@
 import React from "react";
-import { View,  Button, Text, TextInput, Image } from "react-native";
+import { View,  Button, Text, TextInput, Image, TouchableHighlight } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
 import { validateUser } from './services/dataService'
 
@@ -85,7 +85,7 @@ class OnboardScreen extends React.Component {
               justifyContent: "flex-end"
             }}
           >
-          <Text style={{color: 'white', fontSize: 28, textAlign: 'center', paddingBottom: 15, width: 300}}>Welcome! Please enter the hatchery code you receive from the Unplug to Connect event.</Text>
+          <Text style={{color: 'white', fontSize: 22, textAlign: 'center', paddingBottom: 15, width: 300}}>Welcome! Please enter the hatchery code you receive from the Unplug to Connect event.</Text>
             <TextInput
               style={{
                 height:80,
@@ -106,13 +106,28 @@ class OnboardScreen extends React.Component {
               }}
             />
             {/* <Text>Onboard information</Text> */}
-            <Button
+            {/* <Button
               title="Go To Hatchery"
               onPress={this.handleOnPress}
               style={{
-                marginBottom: "3%"
+                marginBottom: "3%",
+                color: "#841584"
               }}
-            />
+            /> */}
+<TouchableHighlight onPress={this.handleOnPress}>
+      <Text style={{
+                marginBottom: "3%",
+                alignItems: 'center',
+                backgroundColor:'#1E6738',
+                borderRadius:10,
+                borderWidth: 0,
+                padding: 15,
+                fontSize: 24,
+                color: '#fff',
+
+                overflow: 'hidden'
+              }}>Go To Hatchery</Text>
+  </TouchableHighlight>            
             <Image
               source={require('./assets/egg.png')}
               style={{
