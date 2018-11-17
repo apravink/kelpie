@@ -1,8 +1,6 @@
 import React from 'react';
-import { AppRegistry, Image, StyleSheet, Text, View, Vibration } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Text, View, Vibration, AppState } from 'react-native';
 import { Font, AppLoading } from "expo";
-
-
 
 const petState = { 
   alive: [
@@ -29,16 +27,62 @@ const petState = {
     require('./assets/petdead-10.png'),
   ]
 }
+const petBackground = {
+  snow: require('./assets/snow-background.png'),
+  beach: require('./assets/beach-background.png'),
+}
 export default class HomeScreen extends React.Component {
+
   constructor(props) {
     super(props);
     this.next = this.next.bind(this);
-
-    this.state = {index: 0, points: 0};
+    this.state = {
+      index: 0, 
+      points: 0, 
+      appState: AppState.currentState,
+      background: 'snow', 
+      petStyle: {
+          marginTop: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 300, height: 300,
+        }
+    };
     this.petStatus = 'alive';
-    //this.points = 0;
     this.state.fontLoaded = false;
-    Vibration.vibrate(3000);
+    Vibration.vibrate(1000);
+
+    setInterval(() => {
+
+      let rand = Math.round(Math.random());
+
+      if(rand == 0) {
+        this.setState(
+          { 
+            petStyle: { 
+              marginTop: 0,
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 300, 
+              height: 300 
+          }}
+          );
+      } else {
+        this.setState(
+          { 
+          petStyle: { 
+            marginTop: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            transform: [{ scaleX: -1}],
+            width: 300, 
+            height: 300 
+          }}
+          );
+      }
+
+  }, 5000);
+
 }
 
 static navigationOptions = {
@@ -53,19 +97,38 @@ async componentWillMount() {
 }
 
 componentDidMount() {
-  
+  AppState.addEventListener('change', this._handleAppStateChange);
   this.next();
 }
 
-swapPet() {
+_handleAppStateChange = (nextAppState) => {
+  if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+  }
+
+  console.log(nextAppState);
+  this.setState({appState: nextAppState});
+}
+
+_onLogout() {
+  console.log('Logout pressed');
+}
+
+componentWillUnmount() {
+  AppState.removeEventListener('change', this._handleAppStateChange);
+}
+
+_convertStatus(status) {
+  if(status == 'alive') {
+    return "Happy 😄"
+  }
 }
 
 next() {
   setTimeout(() => {
-      this.setState({index: (this.state.index+1)%3, points: this.state.points + 1});
+      this.setState({index: (this.state.index+1)%(petState[`${this.petStatus}`].length), points: this.state.points + 1});
       //console.log(this.state.index, this.state.points);
       this.next();
-  }, 1000);
+  }, 200);
 
 }
 
@@ -73,21 +136,26 @@ next() {
     
     return (
       <View style={styles.container}>
+      {/* <Text>{this.state.appState}</Text> */}
         <View style = {styles.backgroundContainer}>
-          <Image source = {require('./assets/SnowBackground.png')} resizeMode = 'cover' style = {styles.backdrop} />
+          <Image source = { petBackground[`${this.state.background}`] } resizeMode = 'cover' style = {styles.backdrop} />
         </View>
-        <View style = {styles.pet}>
+        <View style={styles.petContainer}>
+        <Text onPress={this._onLogout} style={{textAlign: 'right', alignSelf: 'stretch', marginTop: -70, marginBottom: 65 }}>Logout</Text>
         {
           this.state.fontLoaded ? (
-            <Text style={{ fontFamily: '01 Digit', fontSize: 80 }}>
+            <Text style={{ fontFamily: '01 Digit', fontSize: 90, marginTop: 20, marginBottom: 15 }}>
               {this.state.points}
             </Text>
           ) : null
         }
           <Image
             source={petState[`${this.petStatus}`][this.state.index]}
-            style={styles.image}
+            style={this.state.petStyle}
           />
+
+          <Text style={{ overflow: 'hidden', borderWidth: 0, backgroundColor: '#F9DFA2', borderColor: '#000', borderRadius: 12, fontSize: 26, padding: 15, marginTop: 15 }}>{this._convertStatus(this.petStatus)}</Text>
+
         </View>
       </View>
     );
@@ -96,7 +164,7 @@ next() {
 
 const styles = StyleSheet.create({
   points: {
-    fontFamily: '01 Digit'
+    fontFamily: '01 Digit',
   },
   backgroundContainer: {
     position: 'absolute',
@@ -105,20 +173,23 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  pet: {
-    marginTop: 150,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
+  // pet: {
+  //   marginTop: 0,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   transform: [{ scaleX: -1}],
+  //   width: 300, height: 300,
+  // },
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  image: {
-    width: 300, height: 300,
-    justifyContent: 'center'
+  petContainer: {
+    marginTop: 110,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
