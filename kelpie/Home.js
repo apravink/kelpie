@@ -39,6 +39,10 @@ export default class HomeScreen extends React.Component {
     Vibration.vibrate(3000);
 }
 
+static navigationOptions = {
+  header: null
+}
+
 async componentWillMount() {
   await Expo.Font.loadAsync({
     '01 Digit': require('./assets/fonts/01_Digit.ttf'),
@@ -56,7 +60,7 @@ swapPet() {
 next() {
   setTimeout(() => {
       this.setState({index: (this.state.index+1)%3, points: this.state.points + 1});
-      console.log(this.state.index, this.state.points);
+      //console.log(this.state.index, this.state.points);
       this.next();
   }, 1000);
 
@@ -66,17 +70,22 @@ next() {
     
     return (
       <View style={styles.container}>
-      {
+        <View style = {styles.backgroundContainer}>
+          <Image source = {require('./assets/SnowBackground.png')} resizeMode = 'cover' style = {styles.backdrop} />
+        </View>
+        <View style = {styles.pet}>
+        {
           this.state.fontLoaded ? (
             <Text style={{ fontFamily: '01 Digit', fontSize: 80 }}>
               {this.state.points}
             </Text>
           ) : null
         }
-      <Image
-        source={petState[`${this.petStatus}`][this.state.index]}
-        style={styles.image}
-      />
+          <Image
+            source={petState[`${this.petStatus}`][this.state.index]}
+            style={styles.image}
+          />
+        </View>
       </View>
     );
   }
@@ -85,6 +94,18 @@ next() {
 const styles = StyleSheet.create({
   points: {
     fontFamily: '01 Digit'
+  },
+  backgroundContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  pet: {
+    marginTop: 150,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   container: {
     flex: 1,
