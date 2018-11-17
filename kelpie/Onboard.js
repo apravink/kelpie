@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View,  Button, TextInput, Image } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
 import { validateUser } from './services/dataService'
 
@@ -9,34 +9,50 @@ class OnboardScreen extends React.Component {
   }
   constructor(props) {
     super(props)
-    this.state = { hatchCode: "", validated: false };
+    this.state = { hatchCode: "", error: false};
     this.handleOnPress = this.handleOnPress.bind(this)
   }
 
-
+  
 
   handleOnPress() {
-    const isValid = validateUser(this.state.hatchCode)
-    console.log(this.state.hatchCode)
-    if(isValid === true) {
-      this.props.navigation.dispatch(
-        StackActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName: "Home" })]
-        })
-      );
-    }
+    let isValid = false;
+    validateUser(this.state.hatchCode)
+    .then(data => {
+      isValid = data
+      console.log(data)
+      if (isValid) {
+        this.props.navigation.dispatch(
+          StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: "Home" })]
+          })
+        );
+      } else {
+        this.setState({error:true})
+        
+      }
+    })
+    
   }
   
   render() {
-    console.log('state',this.state.hatchCode)
+    const {error} = this.state
+    const borderColor = error ? 'red': 'grey'
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ flex: 2, alignItems: "center", justifyContent: "center" }}>
+        <Image source={require('./assets/onboard-background.png')} resizeMode='cover' 
+        />
+        <Image
+          source={require('./assets/egg.png')}
+          style={{ top:-5 , width: 200, resizeMode: 'contain', marginLeft: 10, height:200 }}
+        />
+      
         <TextInput
-          style={{height:40, borderColor:'gray', borderWidth:1, width:100, marginBottom:8}}
+          style={{height:40, borderColor, borderWidth:1, width:140, marginBottom:8, paddingHorizontal: 2, fontSize: 16}}
           value={this.state.hatchCode}
           onChangeText={text => {
-            if(text) this.setState({ hatchCode: text });
+            this.setState({ hatchCode: text });
           }}
         />
         {/* <Text>Onboard information</Text> */}

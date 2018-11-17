@@ -14,12 +14,17 @@ export async function getPetStatus() {
 
 export async function validateUser( hatchCode ) {
     try {
-        const body = {}
-        return await axios({
-            method: 'post',
-            url: '',
-            data: body
+        
+        const response =  await axios({
+            method: "post",
+            url: "https://limitless-meadow-89301.herokuapp.com/log/club",
+            data: {hatchCode},
+            params : {
+                code : hatchCode
+            }
         });
+        console.log('response ',response.data)
+        return response.data == 'Code invalid!' ? false : true
     } catch(error) {
         console.log(error)
         return error;
