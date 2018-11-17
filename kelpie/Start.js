@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, ActivityIndicator, Image } from 'react-native';
-import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions } from 'react-navigation';
 import {getPetStatus} from './services/dataService'
 
 class StartScreen extends React.Component {

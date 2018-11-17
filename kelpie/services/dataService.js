@@ -10,6 +10,22 @@ export async function getPetStatus() {
 
 }
 
+// Post hatchCode 
+
+export async function validateUser( hatchCode ) {
+    try {
+        const body = {}
+        return await axios({
+            method: 'post',
+            url: '',
+            data: body
+        });
+    } catch(error) {
+        console.log(error)
+        return error;
+    }
+}
+
 // Post Time stamps
 // startTime: Unit time stamp for stsart time
 // endtime: End time
