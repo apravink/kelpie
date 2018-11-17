@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import { Font } from "expo";
 import {
@@ -11,11 +10,6 @@ import {
 } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
 import { setTimestamp } from './services/dataService'
-=======
-import React from 'react';
-import { Image, StyleSheet, Text, View, Vibration, AppState } from 'react-native';
-import { StackActions, NavigationActions } from "react-navigation";
->>>>>>> 697a68067da1aadeecf204fdb547b949c140ae9c
 
 const petState = {
   alive: [
@@ -56,7 +50,6 @@ export default class HomeScreen extends React.Component {
       appState: AppState.currentState,
       background: "snow",
       petStyle: {
-<<<<<<< HEAD
         marginTop: 0,
         alignItems: "center",
         justifyContent: "center",
@@ -69,19 +62,6 @@ export default class HomeScreen extends React.Component {
     };
 
     this.petStatus = "alive";
-=======
-          marginTop: 0,
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 300, height: 300,
-        },
-      timeIn: '', 
-      timeOut: ''
-    };
-
-    this.petStatus = 'alive';
-    this.state.fontLoaded = false;
->>>>>>> 697a68067da1aadeecf204fdb547b949c140ae9c
     Vibration.vibrate(1000);
 
     setInterval(() => {
@@ -111,22 +91,13 @@ export default class HomeScreen extends React.Component {
       }
     }, 5000);
 
-<<<<<<< HEAD
     this._onLogout = this._onLogout.bind(this);
   }
-=======
-  }, 5000);
-
-  this._onLogout = this._onLogout.bind(this)
-
-}
->>>>>>> 697a68067da1aadeecf204fdb547b949c140ae9c
 
   static navigationOptions = {
     header: null
   };
 
-<<<<<<< HEAD
   async loadAsyncAssets() {
     await Font.loadAsync({
       "01 Digit": require("./assets/fonts/01_Digit.ttf")
@@ -134,15 +105,6 @@ export default class HomeScreen extends React.Component {
       this.setState({ fontLoaded: true });
     });
   }
-=======
-async componentWillMount() {
-  this.setState({timeIn: Date.now(), timeOut: ''});
-  await Expo.Font.loadAsync({
-    '01 Digit': require('./assets/fonts/01_Digit.ttf'),
-  });
-  this.setState({ fontLoaded: true });
-}
->>>>>>> 697a68067da1aadeecf204fdb547b949c140ae9c
 
   componentDidMount() {
     this.loadAsyncAssets();
@@ -160,19 +122,9 @@ async componentWillMount() {
     ) {
     }
 
-<<<<<<< HEAD
     console.log(nextAppState);
     this.setState({ appState: nextAppState });
   };
-=======
-_onLogout() {
-  this.props.navigation.dispatch(
-    StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: "Onboard" })]
-    })
-  );}
->>>>>>> 697a68067da1aadeecf204fdb547b949c140ae9c
 
   _onLogout() {
     const {timeIn, fontLoaded} = this.state
@@ -210,11 +162,6 @@ _onLogout() {
 
   render() {
     // console.log(this.state.timeIn, this.state.timeOut);
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 697a68067da1aadeecf204fdb547b949c140ae9c
     return (
       <View style={styles.container}>
         {/* <Text>{this.state.appState}</Text> */}

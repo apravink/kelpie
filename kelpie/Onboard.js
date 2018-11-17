@@ -1,5 +1,5 @@
 import React from "react";
-import { View,  Button, TextInput, Image } from "react-native";
+import { View,  Button, Text, TextInput, Image } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
 import { validateUser } from './services/dataService'
 
@@ -38,6 +38,10 @@ class OnboardScreen extends React.Component {
   render() {
     const {error} = this.state
     const borderColor = error ? 'red': 'grey'
+
+    console.disableYellowBox = true;
+    console.reportErrorsAsExceptions = false;
+
     return (
       <View style={{ 
         flex: 1,
@@ -48,7 +52,7 @@ class OnboardScreen extends React.Component {
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: 'red'
+        //backgroundColor: 'red'
       }}>
         <View style={{ 
           zIndex: 1,
@@ -81,15 +85,20 @@ class OnboardScreen extends React.Component {
               justifyContent: "flex-end"
             }}
           >
+          <Text style={{color: 'white', fontSize: 28, textAlign: 'center', paddingBottom: 15, width: 300}}>Welcome! Please enter the hatchery code you receive from the Unplug to Connect event.</Text>
             <TextInput
               style={{
-                height:40,
+                height:80,
                 borderColor,
                 borderWidth:1,
                 width:140,
                 marginBottom:8,
                 paddingHorizontal: 2,
-                fontSize: 16
+                fontSize: 16,
+                borderRadius: 10,
+                backgroundColor: '#FFFFFF',
+                textAlign: 'center',
+                fontSize: 50
               }}
               value={this.state.hatchCode}
               onChangeText={text => {
