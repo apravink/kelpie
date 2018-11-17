@@ -1,5 +1,6 @@
 import React from 'react';
-import { AppRegistry, Image, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Text, View, Vibration } from 'react-native';
+import { Font, AppLoading } from "expo";
 
 
 
@@ -32,8 +33,19 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.next = this.next.bind(this);
-    this.state = {index: 0};
+
+    this.state = {index: 0, points: 0};
     this.petStatus = 'alive';
+    //this.points = 0;
+    this.state.fontLoaded = false;
+    Vibration.vibrate(3000);
+}
+
+async componentWillMount() {
+  await Expo.Font.loadAsync({
+    '01 Digit': require('./assets/fonts/01_Digit.ttf'),
+  });
+  this.setState({ fontLoaded: true });
 }
 
 componentDidMount() {
@@ -46,25 +58,37 @@ swapPet() {
 
 next() {
   setTimeout(() => {
-      this.setState({index: (this.state.index+1)%3});
+      this.setState({index: (this.state.index+1)%3, points: this.state.points + 1});
+      console.log(this.state.index, this.state.points);
       this.next();
-  }, 450);
+  }, 1000);
+
 }
 
   render() {
     
     return (
       <View style={styles.container}>
-                    <Image
-              source={petState[`${this.petStatus}`][this.state.index]}
-              style={styles.image}
-            />
+      {
+          this.state.fontLoaded ? (
+            <Text style={{ fontFamily: '01 Digit', fontSize: 80 }}>
+              {this.state.points}
+            </Text>
+          ) : null
+        }
+      <Image
+        source={petState[`${this.petStatus}`][this.state.index]}
+        style={styles.image}
+      />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  points: {
+    fontFamily: '01 Digit'
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
