@@ -60,11 +60,11 @@ export default class HomeScreen extends React.Component {
         this.setState(
           { 
             petStyle: { 
-            marginTop: 0,
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 300, 
-            height: 300 
+              marginTop: 0,
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 300, 
+              height: 300 
           }}
           );
       } else {
@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
           );
       }
 
-  }, 8000);
+  }, 5000);
 
 }
 
@@ -115,7 +115,7 @@ componentWillUnmount() {
 
 _convertStatus(status) {
   if(status == 'alive') {
-    return "I'm really happy ^^"
+    return "Happy 😄"
   }
 }
 
@@ -139,7 +139,7 @@ next() {
         <View style={styles.petContainer}>
         {
           this.state.fontLoaded ? (
-            <Text style={{ fontFamily: '01 Digit', fontSize: 80 }}>
+            <Text style={{ fontFamily: '01 Digit', fontSize: 90, marginBottom: 15 }}>
               {this.state.points}
             </Text>
           ) : null
@@ -159,7 +159,7 @@ next() {
 
 const styles = StyleSheet.create({
   points: {
-    fontFamily: '01 Digit'
+    fontFamily: '01 Digit',
   },
   backgroundContainer: {
     position: 'absolute',
