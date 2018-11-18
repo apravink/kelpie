@@ -33,25 +33,14 @@ Backend Repository: [Github](https://github.com/blurges/giftthecode2018)
 
 ### Frontend
 
-* ```
-npm install
-```
+- npm install
+- npm start
+- Scan QR code or open Expo application on device
 
-* ```
-npm start
-```
+### Backend
 
-* Scan QR code or open Expo application on device
-
-###Backend
-
-* ```
-pip install requirements.txt
-```
-
-* ```
-python wsgi.py
-```
+- pip install requirements.txt
+- python wsgi.py
 
 ## Contributors
 - [Raphael Z.](https://github.com/raphaelz)
