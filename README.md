@@ -1,6 +1,5 @@
 # Kelpie - Teaching kids the benefits of unplugging
 
-
 ## Challenge
 
 *Challenge 3: How might we bring the Unplug to Connect campaign into homes / workplaces and engage the whole family / corporate partners / public?.*
@@ -15,7 +14,7 @@ We created an engaging solution to reduce screen time as well as promote social 
 
 ## Prerequisites
 
-###Frontend
+### Frontend
 * Node with packages
 * React
 * [Expo](https://expo.io) account
@@ -23,7 +22,7 @@ We created an engaging solution to reduce screen time as well as promote social 
 
 Frontend Repository: [Github](https://github.com/apravink/kelpie)
 
-###Backend
+### Backend
 - Python 3
 - Flask
 - Heroku (for deploying into the cloud)
@@ -32,7 +31,7 @@ Backend Repository: [Github](https://github.com/blurges/giftthecode2018)
 
 ## Installation & Setup
 
-###Frontend
+### Frontend
 
 * ```
 npm install
