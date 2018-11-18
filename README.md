@@ -13,7 +13,6 @@ The Boys and Girls Clubs of Canada’s Unplug to Connect campaign encourages all
 
 We created an engaging solution to reduce screen time as well as promote social awareness by creating a cross-platform application.
 
-
 ## Prerequisites
 
 ###Frontend
@@ -22,10 +21,14 @@ We created an engaging solution to reduce screen time as well as promote social 
 * [Expo](https://expo.io) account
 * Xcode (for compiling to production)
 
+Frontend Repository: [Github](https://github.com/apravink/kelpie)
+
 ###Backend
 - Python 3
 - Flask
 - Heroku (for deploying into the cloud)
+
+Backend Repository: [Github](https://github.com/blurges/giftthecode2018)
 
 ## Installation & Setup
 
