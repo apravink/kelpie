@@ -4,7 +4,7 @@ import axios from "axios";
 export async function getPetStatus() {
   try {
     const response = await axios.get(
-      "https://limitless-meadow-89301.herokuapp.com/pets?name=child2"
+      "https://limitless-meadow-89301.herokuapp.com/pets?name=child1"
     );
     return response.data;
   } catch (error) {
@@ -23,6 +23,7 @@ export async function validateUser(hatchCode) {
         code: hatchCode
       }
     });
+    console.log(response.data)
     return response.data == "Code invalid!" ? false : true;
   } catch (error) {
     return error;
@@ -33,7 +34,7 @@ export async function validateUser(hatchCode) {
 export async function setTimestamp(startTime, endTime) {
   if(startTime && endTime) {
       const difference = endTime - startTime + "";
-      console.log(typeof difference);
+      console.log('time difference',difference);
       try {
           const response = await axios({
               method: "post",

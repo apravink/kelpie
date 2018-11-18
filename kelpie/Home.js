@@ -10,7 +10,8 @@ import {
   TouchableHighlight
 } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
-import { setTimestamp } from './services/dataService'
+import { setTimestamp, getPetStatus } from './services/dataService'
+import { calculatePetAnimation } from './services/util'
 
 const petState = {
   // alive: [
@@ -97,10 +98,8 @@ export default class HomeScreen extends React.Component {
 
     setInterval(() => {
       let rand = Math.round(Math.random());
-      let rand2 = Math.round(Math.random());
-      let tiredRandom = Math.round(Math.random());
+     
 
-      //(rand2 == 0) ? this.petStatus = 'happy' : this.petStatus = 'running';
 
       if (rand == 0) {
         this.setState({
@@ -125,7 +124,6 @@ export default class HomeScreen extends React.Component {
         });
       }
 
-      //(tiredRandom == 0) ? '' : this.petStatus = 'tired';
 
     }, 5000);
   
@@ -158,6 +156,8 @@ export default class HomeScreen extends React.Component {
     this.next();
   }
 
+  
+
   _handleAppStateChange = nextAppState => {
     if (
       this.state.appState.match(/inactive|background/) &&
@@ -167,13 +167,18 @@ export default class HomeScreen extends React.Component {
       this.setState({timeScreenOn: Date.now()})
       const {timeScreenOn, timeScreenOut} = this.state;
       setTimestamp(timeScreenOut, timeScreenOn)
+      getPetStatus().then(petStatus => {
+        console.log('petStatus', petStatus)
+        const animationState = calculatePetAnimation(petStatus)
+        console.log('animationState', animationState)
+      })
+      
+
     } else if(this.state.appState.match(/active/) && nextAppState === "background") {
       this.setState({timeScreenOut:Date.now()})
-      // console.log('appState', this.state.appState)
     }
 
 
-    // console.log(nextAppState);
     this.setState({ appState: nextAppState });
   };
 
