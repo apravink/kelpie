@@ -14,39 +14,7 @@ import { setTimestamp, getPetStatus } from './services/dataService'
 import { calculatePetAnimation } from './services/util'
 
 const petState = {
-  // alive: [
-  //   require("./assets/pet-1.png"),
-  //   require("./assets/pet-2.png"),
-  //   require("./assets/pet-3.png"),
-  //   require("./assets/pet-4.png"),
-  //   require("./assets/pet-5.png"),
-  //   require("./assets/pet-6.png"),
-  //   require("./assets/pet-7.png"),
-  //   require("./assets/pet-8.png"),
-  //   require("./assets/pet-9.png")
-  // ],
-  // tired: [
-  //   require("./assets/petdead-1.png"),
-  //   require("./assets/petdead-2.png"),
-  //   require("./assets/petdead-3.png"),
-  //   require("./assets/petdead-4.png"),
-  //   require("./assets/petdead-5.png"),
-  //   require("./assets/petdead-6.png"),
-  //   require("./assets/petdead-7.png"),
-  //   require("./assets/petdead-8.png"),
-  //   require("./assets/petdead-9.png"),
-  //   require("./assets/petdead-10.png")
-  // ],
-  // running: [
-  //   require("./assets/petrun-1.png"),
-  //   require("./assets/petrun-2.png"),
-  //   require("./assets/petrun-3.png"),
-  //   require("./assets/petrun-4.png"),
-  //   require("./assets/petrun-5.png"),
-  //   require("./assets/petrun-6.png"),
-  //   require("./assets/petrun-7.png"),
-  //   require("./assets/petrun-8.png")
-  // ]
+  
   angryhappy: [
     require("./assets/angry-happy-angry1.png"),
     require("./assets/angry-happy-angry2.png"),
@@ -77,6 +45,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.next = this.next.bind(this);
     this.state = {
+      petAnimation:'sadangry',
       index: 0,
       points: 0,
       appState: AppState.currentState,
@@ -88,16 +57,13 @@ export default class HomeScreen extends React.Component {
         width: 300,
         height: 300
       },
-<<<<<<< HEAD
       timeScreenOut: "",
       timeScreenOn:"",
-=======
-      timeIn: "",
->>>>>>> 7bc50c310f4308aab9fa79e884eff5d82dc3c98a
       fontLoaded: false
     };
 
     this.petStatus = "sadangry";
+    this.next = this.next.bind(this);
     Vibration.vibrate(1000);
 
     setInterval(() => {
@@ -175,6 +141,7 @@ export default class HomeScreen extends React.Component {
         console.log('petStatus', petStatus)
         const animationState = calculatePetAnimation(petStatus)
         console.log('animationState', animationState)
+        this.setState({petAnimation: animationState});
       })
       
 
@@ -210,16 +177,18 @@ export default class HomeScreen extends React.Component {
       return "Feeling OK 😌";
     } else if(status == "sadangry") {
       return "Feeling angry! 😡";
+    } else if(status == "angryhappy") {
+      return "Feeling overwhelmed 😖 "
+    } else {
+      return "Feeling sad 😔"
     }
   }
 
   next() {
     setTimeout(() => {
-      this.setState({
-        index: (this.state.index + 1) % petState[`${this.petStatus}`].length,
-        //points: this.state.points + 1
-      });
-      //console.log(this.state.index, this.state.points);
+      this.setState((prevState) => ({
+        index: (this.state.index + 1) % petState[`${prevState.petAnimation}`].length,
+      }));
       this.next();
     }, 300);
   }
@@ -237,15 +206,6 @@ export default class HomeScreen extends React.Component {
           />
         </View>
         <View style={styles.petContainer}>
-          {/* <Text
-            onPress={this._onLogout}
-            style={{
-              textAlign: "right",
-              alignSelf: "stretch",
-              marginTop: -85,
-              marginBottom: 0
-            }}
-          > */}
           <Text style={{fontSize: 24, marginBottom: 15, color: 'white' }}>Turn Off Screen!</Text>
      <TouchableHighlight onPress={this._onLogout}>
      <Image source={require("./assets/logout.png")} style={{ right: 0 }} onPress={this._onLogout} />
@@ -264,7 +224,7 @@ export default class HomeScreen extends React.Component {
             </Text>
           ) : null}
           <Image
-            source={petState[`${this.petStatus}`][this.state.index]}
+            source={petState[`${this.state.petAnimation}`][this.state.index]}
             style={this.state.petStyle}
           />
 
@@ -280,7 +240,7 @@ export default class HomeScreen extends React.Component {
               marginTop: 15
             }}
           >
-            {this._convertStatus(this.petStatus)}
+            {this._convertStatus(this.state.petAnimation)}
           </Text>
         </View>
       </View>
