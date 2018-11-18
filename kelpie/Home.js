@@ -88,7 +88,6 @@ export default class HomeScreen extends React.Component {
         height: 300
       },
       timeIn: "",
-      
       fontLoaded: false
     };
 

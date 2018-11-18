@@ -122,7 +122,7 @@ class OnboardScreen extends React.Component {
       <Text style={{
                 marginBottom: "3%",
                 alignItems: 'center',
-                backgroundColor:'#1E6738',
+                backgroundColor:'#1A194C',
                 borderRadius:10,
                 borderWidth: 0,
                 padding: 15,
