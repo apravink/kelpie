@@ -3,7 +3,7 @@ import axios from "axios";
 export async function getPetStatus() {
   try {
     const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos/1"
+      "https://limitless-meadow-89301.herokuapp.com/pets?name=child2"
     );
     console.log(response.data);
   } catch (error) {
@@ -33,20 +33,21 @@ export async function validateUser(hatchCode) {
 // startTime: Unit time stamp for stsart time
 // endtime: End time
 export async function setTimestamp(startTime, endTime) {
-  const difference = endTime - startTime + '';
+  const difference = endTime - startTime + "";
+  console.log(typeof difference);
   try {
     const response = await axios({
       method: "post",
       url: "https://limitless-meadow-89301.herokuapp.com/users",
-      param: {
+      params: {
         time: difference,
         name: "child1",
         locations: "Central Tech TDSB - Service Location"
       }
     });
-    console.log('response from timestamp',response.data)
+    console.log("response from timestamp", response.data);
   } catch (error) {
-    console.log(error);
+    console.log("error", error);
     return error;
   }
 }
