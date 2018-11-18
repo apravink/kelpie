@@ -88,8 +88,12 @@ export default class HomeScreen extends React.Component {
         width: 300,
         height: 300
       },
+<<<<<<< HEAD
       timeScreenOut: "",
       timeScreenOn:"",
+=======
+      timeIn: "",
+>>>>>>> 7bc50c310f4308aab9fa79e884eff5d82dc3c98a
       fontLoaded: false
     };
 
@@ -242,7 +246,7 @@ export default class HomeScreen extends React.Component {
               marginBottom: 0
             }}
           > */}
-          <Text style={{fontSize: 18, marginBottom: 15, color: 'white' }}>Turn Off Screen!</Text>
+          <Text style={{fontSize: 24, marginBottom: 15, color: 'white' }}>Turn Off Screen!</Text>
      <TouchableHighlight onPress={this._onLogout}>
      <Image source={require("./assets/logout.png")} style={{ right: 0 }} onPress={this._onLogout} />
     </TouchableHighlight>

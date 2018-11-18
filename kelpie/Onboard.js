@@ -103,7 +103,7 @@ class OnboardScreen extends React.Component {
                 backgroundColor: '#FFFFFF',
                 textAlign: 'center',
                 fontSize: 50,
-                marginTop: 20
+                marginTop: 55
               }}
               value={this.state.hatchCode}
               onChangeText={text => {
@@ -123,7 +123,7 @@ class OnboardScreen extends React.Component {
       <Text style={{
                 marginBottom: "3%",
                 alignItems: 'center',
-                backgroundColor:'#1E6738',
+                backgroundColor:'#1A194C',
                 borderRadius:10,
                 borderWidth: 0,
                 padding: 15,
