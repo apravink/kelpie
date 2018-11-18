@@ -10,31 +10,28 @@ import {
   TouchableHighlight
 } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
-import { setTimestamp, getPetStatus } from './services/dataService'
-import { calculatePetAnimation } from './services/util'
+import { setTimestamp, getPetStatus } from "./services/dataService";
+import { calculatePetAnimation } from "./services/util";
 
 const petState = {
-  
   angryhappy: [
     require("./assets/angry-happy-angry1.png"),
-    require("./assets/angry-happy-angry2.png"),
+    require("./assets/angry-happy-angry2.png")
   ],
-  happy: [
-    require("./assets/happy1.png"),
-    require("./assets/happy2.png"),
-  ],
-  neutral: [
-    require("./assets/neutral1.png"),
-    require("./assets/neutral2.png"),
-  ],
+  happy: [require("./assets/happy1.png"), require("./assets/happy2.png")],
+  neutral: [require("./assets/neutral1.png"), require("./assets/neutral2.png")],
   sadangry: [
     require("./assets/sad-angry1.png"),
-    require("./assets/sad-angry2.png"),
+    require("./assets/sad-angry2.png")
   ],
-  sad: [
-    require("./assets/sad1.png"),
-    require("./assets/sad2.png"),
-  ]
+  sad: [require("./assets/sad1.png"), require("./assets/sad2.png")]
+};
+const pointsToPetStatusMap = {
+  angryhappy: 0,
+  sad: -1,
+  happy: 5,
+  neutral: 1,
+  sadangry: -5
 };
 const petBackground = {
   snow: require("./assets/snow-background.png"),
@@ -45,9 +42,9 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.next = this.next.bind(this);
     this.state = {
-      petAnimation:'sadangry',
+      petAnimation: "sadangry",
       index: 0,
-      points: 0,
+      points: 1,
       appState: AppState.currentState,
       background: "snow",
       petStyle: {
@@ -58,7 +55,7 @@ export default class HomeScreen extends React.Component {
         height: 300
       },
       timeScreenOut: "",
-      timeScreenOn:"",
+      timeScreenOn: "",
       fontLoaded: false
     };
 
@@ -68,8 +65,6 @@ export default class HomeScreen extends React.Component {
 
     setInterval(() => {
       let rand = Math.round(Math.random());
-     
-
 
       if (rand == 0) {
         this.setState({
@@ -93,15 +88,21 @@ export default class HomeScreen extends React.Component {
           }
         });
       }
-
-
     }, 5000);
-  
 
     setInterval(() => {
-      this.setState({
-        points: this.state.points += Math.floor((Math.random() * 5) + 1)
-      });
+      console.log('insideSetInterval')
+      if (this.state.points > 0) {
+        this.setState(prevState => {
+          console.log("points", pointsToPetStatusMap[prevState.petAnimation]);
+          return {
+            points:
+              this.state.points + pointsToPetStatusMap[prevState.petAnimation]
+          };
+        });
+      } else {
+        this.setState({ points: 0 });
+      }
     }, 10000);
 
     this._onLogout = this._onLogout.bind(this);
@@ -126,35 +127,32 @@ export default class HomeScreen extends React.Component {
     this.next();
   }
 
-  
-
   _handleAppStateChange = nextAppState => {
     if (
       this.state.appState.match(/inactive|background/) &&
       nextAppState === "active"
     ) {
-      // console.log('appState',this.state.appState)
-      this.setState({timeScreenOn: Date.now()})
-      const {timeScreenOn, timeScreenOut} = this.state;
-      setTimestamp(timeScreenOut, timeScreenOn)
+      this.setState({ timeScreenOn: Date.now() });
+      const { timeScreenOn, timeScreenOut } = this.state;
+      setTimestamp(timeScreenOut, timeScreenOn);
       getPetStatus().then(petStatus => {
-        console.log('petStatus', petStatus)
-        const animationState = calculatePetAnimation(petStatus)
-        console.log('animationState', animationState)
-        this.setState({petAnimation: animationState});
-      })
-      
-
-    } else if(this.state.appState.match(/active/) && nextAppState === "background") {
-      this.setState({timeScreenOut:Date.now()})
+        console.log("petStatus", petStatus);
+        const animationState = calculatePetAnimation(petStatus);
+        console.log("animationState", animationState);
+        this.setState({ petAnimation: animationState });
+      });
+    } else if (
+      this.state.appState.match(/active/) &&
+      nextAppState === "background"
+    ) {
+      this.setState({ timeScreenOut: Date.now() });
     }
-
 
     this.setState({ appState: nextAppState });
   };
 
   _onLogout() {
-    const { fontLoaded } = this.state
+    const { fontLoaded } = this.state;
     if (fontLoaded === true) {
       // setTimestamp(timeIn, Date.now())
       this.props.navigation.dispatch(
@@ -173,21 +171,22 @@ export default class HomeScreen extends React.Component {
   _convertStatus(status) {
     if (status == "happy") {
       return "Happy 😄";
-    } else if(status == "neutral") {
+    } else if (status == "neutral") {
       return "Feeling OK 😌";
-    } else if(status == "sadangry") {
+    } else if (status == "sadangry") {
       return "Feeling angry! 😡";
-    } else if(status == "angryhappy") {
-      return "Feeling overwhelmed 😖 "
+    } else if (status == "angryhappy") {
+      return "Feeling overwhelmed 😖 ";
     } else {
-      return "Feeling sad 😔"
+      return "Feeling sad 😔";
     }
   }
 
   next() {
     setTimeout(() => {
-      this.setState((prevState) => ({
-        index: (this.state.index + 1) % petState[`${prevState.petAnimation}`].length,
+      this.setState(prevState => ({
+        index:
+          (this.state.index + 1) % petState[`${prevState.petAnimation}`].length
       }));
       this.next();
     }, 300);
@@ -206,11 +205,17 @@ export default class HomeScreen extends React.Component {
           />
         </View>
         <View style={styles.petContainer}>
-          <Text style={{fontSize: 24, marginBottom: 15, color: 'white' }}>Turn Off Screen!</Text>
-     <TouchableHighlight onPress={this._onLogout}>
-     <Image source={require("./assets/logout.png")} style={{ right: 0 }} onPress={this._onLogout} />
-    </TouchableHighlight>
-            
+          <Text style={{ fontSize: 24, marginBottom: 15, color: "white" }}>
+            Turn Off Screen!
+          </Text>
+          <TouchableHighlight onPress={this._onLogout}>
+            <Image
+              source={require("./assets/logout.png")}
+              style={{ right: 0 }}
+              onPress={this._onLogout}
+            />
+          </TouchableHighlight>
+
           {this.state.fontLoaded ? (
             <Text
               style={{
@@ -220,7 +225,8 @@ export default class HomeScreen extends React.Component {
                 marginBottom: 15
               }}
             >
-              {this.state.points}
+
+              {this.state.points >= 0 ? this.state.points : 0}
             </Text>
           ) : null}
           <Image
