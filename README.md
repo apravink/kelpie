@@ -14,20 +14,27 @@ The cross-platform Unplug Me app rewards children for spending time off their de
 
 ## Prerequisites
 
-### Frontend
+### Frontend (React-Native Application)
 * Node with packages
-* React
+* React-Native
 * [Expo](https://expo.io) account
 * Xcode (for compiling to production)
 
 Frontend Repository: [Github](https://github.com/apravink/kelpie)
 
 ### Backend
-- Python 3
-- Flask
-- Heroku (for deploying into the cloud)
+* Python 3
+* Flask
+* Heroku (for deploying into the cloud)
 
-Backend Repository: [Github](https://github.com/blurges/giftthecode2018)
+Backend Repository: [Github](https://github.com/Vortus/niaid)
+
+### Frontend for Backend
+* Node
+* Vue.js
+* Google Sheet (using Google account)
+
+Frontend for Backend Repository: [Github](https://github.com/blurges/giftthecode2018)
 
 ## Installation & Setup
 
@@ -41,6 +48,11 @@ Backend Repository: [Github](https://github.com/blurges/giftthecode2018)
 
 - pip install requirements.txt
 - python wsgi.py
+
+### Frontend for backend
+
+- npm install
+- npm run serve
 
 ## Contributors
 - [Raphael Z.](https://github.com/raphaelz)
