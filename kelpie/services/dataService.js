@@ -1,18 +1,18 @@
 import axios from "axios";
 
+// Pet mood and temperment at current time
 export async function getPetStatus() {
   try {
     const response = await axios.get(
       "https://limitless-meadow-89301.herokuapp.com/pets?name=child2"
     );
-    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.log("error", error);
+    return error;
   }
 }
 
-// Post hatchCode
-
+// Validate user code
 export async function validateUser(hatchCode) {
   try {
     const response = await axios({
@@ -29,25 +29,26 @@ export async function validateUser(hatchCode) {
   }
 }
 
-// Post Time stamps
-// startTime: Unit time stamp for stsart time
-// endtime: End time
+//Send time stamps for
 export async function setTimestamp(startTime, endTime) {
-  const difference = endTime - startTime + "";
-  console.log(typeof difference);
-  try {
-    const response = await axios({
-      method: "post",
-      url: "https://limitless-meadow-89301.herokuapp.com/users",
-      params: {
-        time: difference,
-        name: "child1",
-        locations: "Central Tech TDSB - Service Location"
+  if(startTime && endTime) {
+      const difference = endTime - startTime + "";
+      console.log(typeof difference);
+      try {
+          const response = await axios({
+              method: "post",
+              url: "https://limitless-meadow-89301.herokuapp.com/users",
+              params: {
+                  time: difference,
+                  name: "child1",
+                  locations: "Central Tech TDSB - Service Location"
+              }
+          });
+          console.log("response from timestamp", response.data);
+      } catch (error) {
+          console.log("error", error);
+          return error;
       }
-    });
-    console.log("response from timestamp", response.data);
-  } catch (error) {
-    console.log("error", error);
-    return error;
   }
+  
 }

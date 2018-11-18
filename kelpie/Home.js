@@ -67,8 +67,8 @@ export default class HomeScreen extends React.Component {
         width: 300,
         height: 300
       },
-      timeIn: "",
-      
+      timeScreenOut: "",
+      timeScreenOn:"",
       fontLoaded: false
     };
 
@@ -133,9 +133,7 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     this.loadAsyncAssets();
-    this.setState({timeIn: Date.now()})
     AppState.addEventListener("change", this._handleAppStateChange);
-    this
 
     this.next();
   }
@@ -145,16 +143,24 @@ export default class HomeScreen extends React.Component {
       this.state.appState.match(/inactive|background/) &&
       nextAppState === "active"
     ) {
+      // console.log('appState',this.state.appState)
+      this.setState({timeScreenOn: Date.now()})
+      const {timeScreenOn, timeScreenOut} = this.state;
+      setTimestamp(timeScreenOut, timeScreenOn)
+    } else if(this.state.appState.match(/active/) && nextAppState === "background") {
+      this.setState({timeScreenOut:Date.now()})
+      // console.log('appState', this.state.appState)
     }
 
-    console.log(nextAppState);
+
+    // console.log(nextAppState);
     this.setState({ appState: nextAppState });
   };
 
   _onLogout() {
-    const {timeIn, fontLoaded} = this.state
+    const { fontLoaded } = this.state
     if (fontLoaded === true) {
-      setTimestamp(timeIn, Date.now())
+      // setTimestamp(timeIn, Date.now())
       this.props.navigation.dispatch(
         StackActions.reset({
           index: 0,

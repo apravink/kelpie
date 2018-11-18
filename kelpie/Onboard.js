@@ -20,6 +20,7 @@ class OnboardScreen extends React.Component {
     validateUser(this.state.hatchCode)
     .then(data => {
       isValid = data
+      console.log('isValid',isValid)
       if (isValid) {
         this.props.navigation.dispatch(
           StackActions.reset({
