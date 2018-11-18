@@ -35,7 +35,8 @@ const pointsToPetStatusMap = {
 };
 const petBackground = {
   snow: require("./assets/snow-background.png"),
-  beach: require("./assets/beach-background.png")
+  beach: require("./assets/beach-background.png"),
+  forest: require("./assets/background_forrest.png")
 };
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ export default class HomeScreen extends React.Component {
       index: 0,
       points: 1,
       appState: AppState.currentState,
-      background: "snow",
+      background: "forest",
       petStyle: {
         marginTop: 0,
         alignItems: "center",
@@ -265,13 +266,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   },
-  // pet: {
-  //   marginTop: 0,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   transform: [{ scaleX: -1}],
-  //   width: 300, height: 300,
-  // },
+  backdrop: {
+    width:'100%',
+    height:'100%'
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
