@@ -13,38 +13,58 @@ import { StackActions, NavigationActions } from "react-navigation";
 import { setTimestamp } from './services/dataService'
 
 const petState = {
-  alive: [
-    require("./assets/pet-1.png"),
-    require("./assets/pet-2.png"),
-    require("./assets/pet-3.png"),
-    require("./assets/pet-4.png"),
-    require("./assets/pet-5.png"),
-    require("./assets/pet-6.png"),
-    require("./assets/pet-7.png"),
-    require("./assets/pet-8.png"),
-    require("./assets/pet-9.png")
+  // alive: [
+  //   require("./assets/pet-1.png"),
+  //   require("./assets/pet-2.png"),
+  //   require("./assets/pet-3.png"),
+  //   require("./assets/pet-4.png"),
+  //   require("./assets/pet-5.png"),
+  //   require("./assets/pet-6.png"),
+  //   require("./assets/pet-7.png"),
+  //   require("./assets/pet-8.png"),
+  //   require("./assets/pet-9.png")
+  // ],
+  // tired: [
+  //   require("./assets/petdead-1.png"),
+  //   require("./assets/petdead-2.png"),
+  //   require("./assets/petdead-3.png"),
+  //   require("./assets/petdead-4.png"),
+  //   require("./assets/petdead-5.png"),
+  //   require("./assets/petdead-6.png"),
+  //   require("./assets/petdead-7.png"),
+  //   require("./assets/petdead-8.png"),
+  //   require("./assets/petdead-9.png"),
+  //   require("./assets/petdead-10.png")
+  // ],
+  // running: [
+  //   require("./assets/petrun-1.png"),
+  //   require("./assets/petrun-2.png"),
+  //   require("./assets/petrun-3.png"),
+  //   require("./assets/petrun-4.png"),
+  //   require("./assets/petrun-5.png"),
+  //   require("./assets/petrun-6.png"),
+  //   require("./assets/petrun-7.png"),
+  //   require("./assets/petrun-8.png")
+  // ]
+  angryhappy: [
+    require("./assets/angry-happy-angry1.png"),
+    require("./assets/angry-happy-angry2.png"),
   ],
-  tired: [
-    require("./assets/petdead-1.png"),
-    require("./assets/petdead-2.png"),
-    require("./assets/petdead-3.png"),
-    require("./assets/petdead-4.png"),
-    require("./assets/petdead-5.png"),
-    require("./assets/petdead-6.png"),
-    require("./assets/petdead-7.png"),
-    require("./assets/petdead-8.png"),
-    require("./assets/petdead-9.png"),
-    require("./assets/petdead-10.png")
+  happy: [
+    require("./assets/happy1.png"),
+    require("./assets/happy2.png"),
   ],
-  running: [
-    require("./assets/petrun-1.png"),
-    require("./assets/petrun-2.png"),
-    require("./assets/petrun-3.png"),
-    require("./assets/petrun-4.png"),
-    require("./assets/petrun-5.png"),
-    require("./assets/petrun-6.png"),
-    require("./assets/petrun-7.png"),
-    require("./assets/petrun-8.png")
+  neutral: [
+    require("./assets/neutral1.png"),
+    require("./assets/neutral2.png"),
+  ],
+  sadangry: [
+    require("./assets/sad-angry1.png"),
+    require("./assets/sad-angry2.png"),
+  ],
+  sad: [
+    require("./assets/sad1.png"),
+    require("./assets/sad2.png"),
   ]
 };
 const petBackground = {
@@ -72,7 +92,7 @@ export default class HomeScreen extends React.Component {
       fontLoaded: false
     };
 
-    this.petStatus = "alive";
+    this.petStatus = "sadangry";
     Vibration.vibrate(1000);
 
     setInterval(() => {
@@ -80,7 +100,7 @@ export default class HomeScreen extends React.Component {
       let rand2 = Math.round(Math.random());
       let tiredRandom = Math.round(Math.random());
 
-      (rand2 == 0) ? this.petStatus = 'alive' : this.petStatus = 'running';
+      //(rand2 == 0) ? this.petStatus = 'happy' : this.petStatus = 'running';
 
       if (rand == 0) {
         this.setState({
@@ -105,7 +125,7 @@ export default class HomeScreen extends React.Component {
         });
       }
 
-      (tiredRandom == 0) ? '' : this.petStatus = 'tired';
+      //(tiredRandom == 0) ? '' : this.petStatus = 'tired';
 
     }, 5000);
   
@@ -169,10 +189,12 @@ export default class HomeScreen extends React.Component {
   }
 
   _convertStatus(status) {
-    if (status == "alive" || status == "running") {
+    if (status == "happy") {
       return "Happy 😄";
-    } else {
-      return "Feeling tired 😴"
+    } else if(status == "neutral") {
+      return "Feeling OK 😌";
+    } else if(status == "sadangry") {
+      return "Feeling angry! 😡";
     }
   }
 
@@ -184,7 +206,7 @@ export default class HomeScreen extends React.Component {
       });
       //console.log(this.state.index, this.state.points);
       this.next();
-    }, 150);
+    }, 300);
   }
 
   render() {
