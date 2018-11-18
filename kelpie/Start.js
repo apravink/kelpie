@@ -19,7 +19,7 @@ class StartScreen extends React.Component {
           actions: [NavigationActions.navigate({ routeName: "Onboard" })]
         })
       );
-    }, 1000);
+    }, 3000);
   }
 
   render() {

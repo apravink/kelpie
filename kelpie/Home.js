@@ -6,7 +6,8 @@ import {
   Text,
   View,
   Vibration,
-  AppState
+  AppState,
+  TouchableHighlight
 } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
 import { setTimestamp } from './services/dataService'
@@ -23,7 +24,7 @@ const petState = {
     require("./assets/pet-8.png"),
     require("./assets/pet-9.png")
   ],
-  dead: [
+  tired: [
     require("./assets/petdead-1.png"),
     require("./assets/petdead-2.png"),
     require("./assets/petdead-3.png"),
@@ -34,6 +35,16 @@ const petState = {
     require("./assets/petdead-8.png"),
     require("./assets/petdead-9.png"),
     require("./assets/petdead-10.png")
+  ],
+  running: [
+    require("./assets/petrun-1.png"),
+    require("./assets/petrun-2.png"),
+    require("./assets/petrun-3.png"),
+    require("./assets/petrun-4.png"),
+    require("./assets/petrun-5.png"),
+    require("./assets/petrun-6.png"),
+    require("./assets/petrun-7.png"),
+    require("./assets/petrun-8.png")
   ]
 };
 const petBackground = {
@@ -66,6 +77,10 @@ export default class HomeScreen extends React.Component {
 
     setInterval(() => {
       let rand = Math.round(Math.random());
+      let rand2 = Math.round(Math.random());
+      let tiredRandom = Math.round(Math.random());
+
+      (rand2 == 0) ? this.petStatus = 'alive' : this.petStatus = 'running';
 
       if (rand == 0) {
         this.setState({
@@ -89,7 +104,17 @@ export default class HomeScreen extends React.Component {
           }
         });
       }
+
+      (tiredRandom == 0) ? '' : this.petStatus = 'tired';
+
     }, 5000);
+  
+
+    setInterval(() => {
+      this.setState({
+        points: this.state.points += Math.floor((Math.random() * 5) + 1)
+      });
+    }, 10000);
 
     this._onLogout = this._onLogout.bind(this);
   }
@@ -144,8 +169,10 @@ export default class HomeScreen extends React.Component {
   }
 
   _convertStatus(status) {
-    if (status == "alive") {
+    if (status == "alive" || status == "running") {
       return "Happy 😄";
+    } else {
+      return "Feeling tired 😴"
     }
   }
 
@@ -153,11 +180,11 @@ export default class HomeScreen extends React.Component {
     setTimeout(() => {
       this.setState({
         index: (this.state.index + 1) % petState[`${this.petStatus}`].length,
-        points: this.state.points + 1
+        //points: this.state.points + 1
       });
       //console.log(this.state.index, this.state.points);
       this.next();
-    }, 200);
+    }, 150);
   }
 
   render() {
@@ -173,17 +200,19 @@ export default class HomeScreen extends React.Component {
           />
         </View>
         <View style={styles.petContainer}>
-          <Text
+          {/* <Text
             onPress={this._onLogout}
             style={{
               textAlign: "right",
               alignSelf: "stretch",
-              marginTop: -70,
-              marginBottom: 65
+              marginTop: -85,
+              marginBottom: 0
             }}
-          >
-            Logout
-          </Text>
+          > */}
+     <TouchableHighlight onPress={this._onLogout}>
+     <Image source={require("./assets/logout.png")} style={{ right: 0 }} onPress={this._onLogout} />
+    </TouchableHighlight>
+            
           {this.state.fontLoaded ? (
             <Text
               style={{
@@ -246,7 +275,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   petContainer: {
-    marginTop: 110,
+    marginTop: 70,
     alignItems: "center",
     justifyContent: "center"
   }
