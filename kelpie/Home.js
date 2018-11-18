@@ -209,6 +209,7 @@ export default class HomeScreen extends React.Component {
               marginBottom: 0
             }}
           > */}
+          <Text style={{fontSize: 18, marginBottom: 15, color: 'white' }}>Turn Off Screen!</Text>
      <TouchableHighlight onPress={this._onLogout}>
      <Image source={require("./assets/logout.png")} style={{ right: 0 }} onPress={this._onLogout} />
     </TouchableHighlight>
@@ -275,7 +276,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   petContainer: {
-    marginTop: 70,
+    marginTop: 20,
     alignItems: "center",
     justifyContent: "center"
   }
