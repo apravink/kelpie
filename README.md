@@ -10,7 +10,7 @@ The Boys and Girls Clubs of Canada’s Unplug to Connect campaign encourages all
 
 ## Solution
 
-We created an engaging solution to reduce screen time as well as promote social awareness by creating a cross-platform application.
+The cross-platform Unplug Me app rewards children for spending time off their devices by giving them a virtual pet that grows stronger as the device remains unused. Excessive use of the device makes the pet weak and sick. The app logs time users spend with their screens off so Boys and Girls Club can present summary data to campaign sponsors and other stakeholders.
 
 ## Prerequisites
 
